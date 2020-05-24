@@ -1,38 +1,46 @@
-
-
 let spaceship;
+let enemys = [];
+let a;
+
+function preload(){
+  a = loadModel('nave.obj');
+}
 
 function setup() {
-  createCanvas(400, 400,WEBGL);
-  enemys = new Enemy;
+  createCanvas(800, 800, WEBGL);
+  for (let i=0;i<9;i++){
+  enemys[i] = new Enemy();
+  }
   spaceship = new ship;
 }
 
 
 function draw() {
-  background(220);
-  enemys.show();
+  background(220); 
+    for(let i=0;i<enemys.length;i++){
+  enemys[i].show();
+  }
   spaceship.move(mouseX);
   spaceship.show();
-
 
 }
 
 
 class Enemy {
-  constructor(x) {
-    this.x = 0;
+  constructor() {
+    this.x = random(-400,400);
+    //this.y = random(200,500);
   }
 
   show() {
-    stroke(0);
-    strokeWeight(1);
+    stroke(5); 
+    strokeWeight(0.5);
     push();
-    translate(150,100,0);
+    translate(this.x,-300,0);
     fill(88,0,0);
-    rotateX(frameCount * 0.01);
-    rotateY(frameCount * 0.01);
-    cylinder(10,60);
+    rotateX(PI);
+    scale(30);
+    model(a);
     pop();
   }
   
@@ -41,8 +49,8 @@ class Enemy {
 
 class ship {
     constructor() {
-        this.x = (-200,200);
-        this.y = 150;
+        this.x = windowWidth;
+        this.y = windowHeight/3;
     }
     
     move(x_value){
